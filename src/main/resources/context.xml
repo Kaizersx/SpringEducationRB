@@ -1,22 +1,44 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+       xmlns:p="http://www.springframework.org/schema/p"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd"
 
-    <bean id="t1000" class="robotT1000.T1000">
+default-lazy-init="true"
+>
+
+    <import resource="context2.xml"/>
+    <import resource="DBContext.xml"/>
+
+    <bean id="t1000" class="robotT1000.T1000"
+parent="BaseModel"
+    >
+
+        <property name="year" value="1987"/>
+        <property name="color" value="Silver"/>
+        <property name="soundEnabled" value="true"/>
+
+    </bean>
+
+
+    <bean id="t1000Empty" class="robotT1000.T1000"  lazy-init="true">
+
+        <constructor-arg ref="sonyHand"/>
+        <constructor-arg ref="toshibaHead"/>
+        <constructor-arg ref="toshibaLeg"/>
+
+
+    </bean>
+
+    <bean id="BaseModel" abstract="true">
+
         <constructor-arg ref="sonyHand"/>
         <constructor-arg ref="toshibaHead"/>
         <constructor-arg ref="toshibaLeg"/>
 
     </bean>
 
+    <bean id="myBeanPostProcessor" class="robotT1000.myBeanPostProcessor"/>
 
-    <bean id="sonyHead" class="imp.sony.SonyHead"/>
-    <bean id="sonyHand" class="imp.sony.SonyHand"/>
-    <bean id="sonyLeg" class="imp.sony.SonyLeg"/>
-
-    <bean id="toshibaHead" class="imp.toshiba.ToshibaHead"/>
-    <bean id="toshibaHand" class="imp.toshiba.ToshibaLeg"/>
-    <bean id="toshibaLeg" class="imp.toshiba.ToshibaLeg"/>
 
 </beans>

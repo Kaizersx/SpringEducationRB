@@ -11,7 +11,8 @@ public class startApp {
 
         T1000 t1000=(T1000)context.getBean("t1000");
 
-        t1000.action();
+
+
 
     }
 

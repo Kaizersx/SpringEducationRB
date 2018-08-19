@@ -5,12 +5,10 @@ import interfaces.Hand;
 import interfaces.Head;
 import interfaces.Leg;
 import interfaces.Robot;
+import org.springframework.beans.factory.InitializingBean;
 
-public class T1000 implements Robot{
+public class T1000 extends BaseModel implements InitializingBean{
 
-    Hand hand;
-    Head head;
-    Leg leg;
 
     String color;
     int year;
@@ -20,47 +18,15 @@ public class T1000 implements Robot{
     }
 
     public T1000(Hand hand, Head head, Leg leg, String color, int year, boolean soundEnabled) {
-        this.hand = hand;
-        this.head = head;
-        this.leg = leg;
+        super(hand,head,leg);
         this.color = color;
         this.year = year;
         this.soundEnabled = soundEnabled;
     }
 
     public T1000(Hand hand, Head head, Leg leg) {
-        this.hand = hand;
-        this.head = head;
-        this.leg = leg;
+        super(hand,head,leg);
     }
-
-
-
-
-    public Hand getHand() {
-        return hand;
-    }
-
-    public void setHand(Hand hand) {
-        this.hand = hand;
-    }
-
-    public Head getHead() {
-        return head;
-    }
-
-    public void setHead(Head head) {
-        this.head = head;
-    }
-
-    public Leg getLeg() {
-        return leg;
-    }
-
-    public void setLeg(Leg leg) {
-        this.leg = leg;
-    }
-
 
     @Override
     public void dance() {
@@ -68,12 +34,54 @@ public class T1000 implements Robot{
         System.out.println("Dance by t1000");
     }
 
+    public String getColor() {
+        return color;
+    }
+
+    public void setColor(String color) {
+        this.color = color;
+    }
+
+    public int getYear() {
+        return year;
+    }
+
+    public void setYear(int year) {
+        this.year = year;
+    }
+
+    public boolean isSoundEnabled() {
+        return soundEnabled;
+    }
+
+    public void setSoundEnabled(boolean soundEnabled) {
+        this.soundEnabled = soundEnabled;
+    }
+
+   public void initObject(){
+
+        System.out.println("init object");
+    }
+
+   public void destroyObject(){
+        System.out.println("Delete object");
+    }
+
+    @Override
+    public void afterPropertiesSet() throws Exception {
+        System.out.println(this + " - method init");
+    }
+
     @Override
     public void action() {
+        getHand().catchSome();
+        getHead().calc();
+        getLeg().run();
+        System.out.println("Color: "+color+"\n"+"Year: "+year+"\n"+"SoundEnabled: "+soundEnabled);
 
-        head.calc();
-        hand.catchSome();
-        leg.run();
 
     }
+
+
+
 }
